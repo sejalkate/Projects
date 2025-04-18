@@ -1,0 +1,227 @@
+package com.interfaceNew;
+public class Student 
+{
+	//Private Variable
+	private int id;
+	private String name;
+	private int age;
+	
+	//Constructor
+	public Student(int id, String name, int age)
+	{
+		this.id = id;
+		this.name = name;
+		this.age = age;
+	}
+
+	//Getter-Setter
+	public int getId() 
+	{
+		return id;
+	}
+	public void setId(int id) 
+	{
+		this.id = id;
+	}
+	public String getName()
+	{
+		return name;
+	}
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	public int getAge()
+	{
+		return age;
+	}
+	public void setAge(int age)
+	{
+		this.age = age;
+	}
+	
+	//toString
+	@Override
+	public String toString()
+	{
+		return "ID: "+id+" | Name: "+name+" | Age: "+age;
+	}
+}
+
+---------------------------------------------------------------------------------------------------------------------
+
+import java.util.Scanner;
+public class StudentCRUD
+{
+	static Scanner sc=new Scanner(System.in);
+	public static Student s[]=new Student[100];
+	public static int count=0;
+	
+	//Adding a student
+	public static void addStudent()
+	{
+		System.out.println();
+		System.out.print("Enter Student ID: ");
+		int id=sc.nextInt();
+		System.out.print("Enter Student Name: ");
+		String name=sc.next();
+		System.out.print("Enter Student Age: ");
+		int age=sc.nextInt();
+		s[count++]=new Student(id,name,age);
+		System.out.println();
+		System.out.println("Student added successfully..!");
+	}
+	
+	//Updating a student record
+	public static void updateStudent()
+	{
+		System.out.println("Enter Student ID to update: ");
+		int id=sc.nextInt();
+		if(id>count)
+		{
+			System.out.println("Record has "+count+" students");
+		}
+		else
+		{
+			for(int i=0;i<count;i++)
+			{
+				if(s[i].getId()==id)
+				{
+					System.out.println("Enter new name of student: ");
+					String newName=sc.next();
+					System.out.println("Enter new age of student: ");
+					int newAge=sc.nextInt();
+					s[i]=new Student(id,newName,newAge);
+					System.out.println("Student updated successfully...!");
+				}
+				else
+				{
+					System.out.println("Student ID not found...!");
+				}
+			}
+		}
+	}
+	
+	//Searching a student
+	public static void findStudent()
+	{
+		System.out.println("Enter the Student ID to find");
+		int id=sc.nextInt();
+		if(id>count)
+        {
+        	System.out.println("Record has "+count+" students");
+        }
+		else
+		{
+			for(int k=0;k<count;k++)
+			{
+				if(s[k].getId()==id)
+				{
+					System.out.println("Student Record---> "+s[k]);
+					System.out.println();
+					break;
+				}
+				else
+				{
+					System.out.println("Student not found.");
+				}
+			}
+		}
+		
+	}
+	
+	//Removing a student
+	public static void removeStudent()
+	{
+		System.out.println("Enter Student ID to remove: ");
+        int id = sc.nextInt();
+        if(id>count)
+        {
+        	System.out.println("Record has "+count+" students");
+        }
+        else
+        {
+        	for(int i=0;i<count;i++)
+            {
+                if(s[i].getId()==id)
+                {
+                    // Shift elements left to fill the gap
+                    for(int j=i;j<count-1;j++)
+                    {
+                        s[j]=s[j+1];
+                    }
+                    s[count-1]=null; // Clear the last element
+                    count--;
+                    System.out.println("Student removed successfully!");
+                    break;
+                }
+                else
+                {
+                	 System.out.println("Student ID not found!");
+                }
+            }
+        }
+        
+	}
+	
+	//Displaying student's record
+	private static void displayStudent()
+	{
+		if(count==0)
+		{
+			System.out.println("Record is empty...!");
+		}
+		else
+		{
+			System.out.println("Student Record--->");
+			System.out.println();
+			for(int k=0;k<count;k++)
+			{
+				System.out.println(s[k]);
+			}
+		}
+	}
+	public static void main(String []args)
+	{
+		int choice;
+		do
+		{
+			System.out.println("______________________________");
+			System.out.println("Student Management Menu--->");
+			System.out.println("  1. Add Student");
+			System.out.println("  2. Update Student");
+			System.out.println("  3. Find Student");
+			System.out.println("  4. Remove Student");
+			System.out.println("  5. Display Student Records");
+			System.out.println("  0. Exit");
+			System.out.print("  Enter the choice: ");
+			choice=sc.nextInt();
+			switch(choice)
+			{
+			case 1:
+				addStudent();
+				break;
+			case 2:
+				updateStudent();
+				break;
+			case 3:
+				findStudent();
+				break;
+			case 4:
+				removeStudent();
+				break;
+			case 5:
+				displayStudent();
+				break;
+			case 0:
+				System.out.println("Exit");
+				break;
+			default:
+				System.out.println("Invalid Choice...Enter from menu");
+			}
+		}while(choice!=0);
+	}
+	
+}
+
+
